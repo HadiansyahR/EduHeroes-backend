@@ -1,0 +1,31 @@
+# Environment variables
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# PyCharm / IDE
+.idea/
+.vscode/
+
+# Local testing scripts
+test_db.py
+test_hashing.py
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Alembic compiled files
+alembic/__pycache__/
+
+# Logs
+*.log
