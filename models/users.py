@@ -1,1 +1,18 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from database import Base
+from models.roles import Role
+
+
+class User(Base):
+    __tablename__ = 'users'
+    id_user: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(String, nullable=False)
+
+    role_id: Mapped[int] = mapped_column(ForeignKey('roles.id_role'), nullable=False)
+    role: Mapped[Role] = relationship()
+
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
