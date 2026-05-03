@@ -22,7 +22,7 @@ if config.config_file_name is not None:
 from database import Base
 from models.roles import Role
 from models.users import User
-
+from models.courses import Course
 
 target_metadata = Base.metadata
 
