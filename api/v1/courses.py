@@ -23,7 +23,7 @@ def add_course(
 def get_courses(db: Session = Depends(get_db)):
     return db.query(Course).all()
 
-@router.get("/my")
+@router.get("/my", response_model=list[CourseRead])
 def get_my_courses(
     current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -64,3 +64,12 @@ def delete_course_endpoint(
         raise HTTPException(status_code=404, detail="Course not found")
 
     return {"message": "Course deleted"}
+
+@router.get("/{course_id}/students")
+def get_course_students(course_id: int, db: Session = Depends(get_db)):
+    course = db.query(Course).filter(Course.id_course == course_id).first()
+
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+
+    return [enrollment.student for enrollment in course.enrollments]

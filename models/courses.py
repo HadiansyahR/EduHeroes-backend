@@ -1,9 +1,8 @@
 from datetime import datetime
-from sqlalchemy import String, Boolean, ForeignKey, DateTime, func
+from sqlalchemy import String, ForeignKey, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import Base
-from models.users import User
 
 class Course(Base):
     __tablename__ = "courses"
@@ -14,7 +13,9 @@ class Course(Base):
     description: Mapped[str] = mapped_column(String, nullable=False)
 
     created_by: Mapped[int] = mapped_column(ForeignKey("users.id_user"), nullable=False)
-    teacher: Mapped[User] = relationship("User")
+    teacher: Mapped["User"] = relationship("User", foreign_keys=[created_by], back_populates="courses")
+
+    enrollments: Mapped[list["Enrollment"]] = relationship("Enrollment", back_populates="course", cascade="all, delete")
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
