@@ -1,4 +1,5 @@
-from sqlalchemy import String, Boolean, ForeignKey
+from datetime import datetime
+from sqlalchemy import String, Boolean, ForeignKey, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database import Base
@@ -13,6 +14,19 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
 
     role_id: Mapped[int] = mapped_column(ForeignKey('roles.id_role'), nullable=False)
-    role: Mapped[Role] = relationship()
+    role: Mapped[Role] = relationship("Role")
 
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False
+    )
