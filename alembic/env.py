@@ -24,6 +24,7 @@ from models.roles import Role
 from models.users import User
 from models.courses import Course
 from models.enrollments import Enrollment
+from models.quizzes import Quiz
 
 target_metadata = Base.metadata
 

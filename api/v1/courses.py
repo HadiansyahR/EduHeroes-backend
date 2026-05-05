@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from starlette import status
 
 from database import get_db
 from schemas.course import CourseCreate, CourseRead, CourseUpdate
+from schemas.quiz import QuizRead
 from services.course_service import create_course, update_course, delete_course
 from core.auth import get_current_user, teacher_required
 from models.courses import Course
@@ -73,3 +73,12 @@ def get_course_students(course_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Course not found")
 
     return [enrollment.student for enrollment in course.enrollments]
+
+@router.get("/{course_id}/quizzes", response_model=list[QuizRead])
+def get_course_quizzes(course_id: int, db: Session = Depends(get_db)):
+    course = db.query(Course).filter(Course.id_course == course_id).first()
+
+    if not course:
+        raise HTTPException(status_code=404, detail="Course not found")
+
+    return course.quizzes

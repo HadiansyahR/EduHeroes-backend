@@ -16,6 +16,7 @@ class Course(Base):
     teacher: Mapped["User"] = relationship("User", foreign_keys=[created_by], back_populates="courses")
 
     enrollments: Mapped[list["Enrollment"]] = relationship("Enrollment", back_populates="course", cascade="all, delete")
+    quizzes: Mapped[list["Quiz"]] = relationship("Quiz", back_populates="course", cascade="all, delete")
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

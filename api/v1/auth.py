@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from starlette import status
 
 from database import get_db
 from schemas.auth import LoginRequest, Token
@@ -9,6 +8,7 @@ from services.auth_service import authenticate_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+# Ini dipake/uncomment kalo udah ga pake swagger buat testing
 # @router.post("/login", response_model=Token, status_code=status.HTTP_200_OK)
 # def login_user(data: LoginRequest, db: Session = Depends(get_db)):
 #     token = authenticate_user(db, data.identifier, data.password)
