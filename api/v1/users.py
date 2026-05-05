@@ -13,6 +13,6 @@ router = APIRouter(prefix="/users", tags=["users"])
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     return create_user(db, user)
 
-@router.get("/me", status_code=status.HTTP_200_OK)
+@router.get("/me", status_code=status.HTTP_200_OK, response_model=UserRead)
 def get_me(current_user = Depends(get_current_user)):
     return current_user

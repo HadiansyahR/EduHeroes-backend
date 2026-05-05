@@ -7,14 +7,14 @@ from models.roles import Role
 
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id_user: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String, unique=True, nullable=False)
     hashed_password: Mapped[str] = mapped_column(String, nullable=False)
 
-    role_id: Mapped[int] = mapped_column(ForeignKey('roles.id_role'), nullable=False)
-    role: Mapped[Role] = relationship("Role")
+    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id_role"), nullable=False)
+    role: Mapped["Role"] = relationship("Role", foreign_keys=[role_id], back_populates="users")
 
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 
@@ -30,3 +30,7 @@ class User(Base):
         onupdate=func.now(),
         nullable=False
     )
+
+    courses: Mapped[list["Course"]] = relationship("Course", back_populates="teacher", cascade="all, delete")
+    enrollments: Mapped[list["Enrollment"]] = relationship("Enrollment", back_populates="student", cascade="all, delete")
+    quizzes: Mapped[list["Quiz"]] = relationship("Quiz", back_populates="creator", cascade="all, delete")

@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlalchemy import String, DateTime, func
-from sqlalchemy.orm import mapped_column, Mapped
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from database import Base
 
@@ -22,3 +22,5 @@ class Role(Base):
         onupdate=func.now(),
         nullable=False
     )
+
+    users: Mapped[list["User"]] = relationship("User", back_populates="role", cascade="all, delete")
