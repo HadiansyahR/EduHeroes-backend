@@ -34,3 +34,5 @@ class User(Base):
     courses: Mapped[list["Course"]] = relationship("Course", back_populates="teacher", cascade="all, delete")
     enrollments: Mapped[list["Enrollment"]] = relationship("Enrollment", back_populates="student", cascade="all, delete")
     quizzes: Mapped[list["Quiz"]] = relationship("Quiz", back_populates="creator", cascade="all, delete")
+    user_answers: Mapped[list["UserAnswer"]] = relationship("UserAnswer", cascade="all, delete")
+    quiz_results: Mapped[list["QuizResult"]] = relationship("QuizResult", cascade="all, delete")
