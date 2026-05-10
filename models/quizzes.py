@@ -20,6 +20,9 @@ class Quiz(Base):
     created_by: Mapped[int] = mapped_column(ForeignKey("users.id_user"), nullable=False)
     creator: Mapped["User"] = relationship("User", foreign_keys=[created_by], back_populates="quizzes")
 
+    questions: Mapped[list["Question"]] = relationship("Question", back_populates="quiz", cascade="all, delete")
+    results: Mapped[list["QuizResult"]] = relationship("QuizResult", back_populates="quiz", cascade="all, delete")
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

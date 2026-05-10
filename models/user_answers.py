@@ -26,3 +26,6 @@ class UserAnswer(Base):
         server_default=func.now(),
         nullable=False
     )
+
+    attempt_id: Mapped[int] = mapped_column(ForeignKey("quiz_attempts.id_attempt"), nullable=False)
+    attempt: Mapped["QuizAttempt"] = relationship("QuizAttempt", foreign_keys=[attempt_id], back_populates="quiz_attempts")

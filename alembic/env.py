@@ -25,6 +25,11 @@ from models.users import User
 from models.courses import Course
 from models.enrollments import Enrollment
 from models.quizzes import Quiz
+from models.questions import Question
+from models.answers import Answer
+from models.user_answers import UserAnswer
+from models.quiz_results import QuizResult
+from models.quiz_attempts import QuizAttempt
 
 target_metadata = Base.metadata
 
